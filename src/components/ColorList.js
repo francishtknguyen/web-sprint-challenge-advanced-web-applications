@@ -3,6 +3,7 @@ import axios from "axios";
 
 import Color from "./Color";
 import EditMenu from "./EditMenu";
+import axiosWithAuth from "../helpers/axiosWithAuth";
 
 const initialColor = {
   color: "",
@@ -20,9 +21,29 @@ const ColorList = ({ colors, updateColors }) => {
 
   const saveEdit = (e) => {
     e.preventDefault();
+    axiosWithAuth()
+      .put(`/colors/${colorToEdit.id}`, colorToEdit)
+      .then((res) => {
+        const updatedArray = colors.filter(
+          (color) => color.id !== colorToEdit.id
+        );
+        updateColors([...updatedArray, colorToEdit]);
+        setEditing(false);
+      })
+      .catch((err) => console.log({ err }));
   };
 
-  const deleteColor = (color) => {};
+  const deleteColor = (color) => {
+    axiosWithAuth()
+      .delete(`/colors/${color.id}`)
+      .then((res) => {
+        const colorToDelete = colors.filter((obj) => obj.id !== color.id);
+        updateColors(colorToDelete);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="colors-wrap">
