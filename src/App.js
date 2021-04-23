@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import PrivateRoute from "./components/PrivateRoute";
@@ -15,7 +15,7 @@ function App() {
       <div className="App">
         <header>
           Color Picker Sprint Challenge
-          <a data-testid="logoutButton" href="#" onClick={handleLogout}>
+          <a data-testid="logoutButton" href="/" onClick={handleLogout}>
             logout
           </a>
         </header>
